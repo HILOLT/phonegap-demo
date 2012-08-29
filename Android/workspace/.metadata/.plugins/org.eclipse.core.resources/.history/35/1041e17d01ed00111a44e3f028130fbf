@@ -1,0 +1,7 @@
+/**
+ * todolist 的主js文件
+ * 应用架构：
+ * Ext.application 实例
+ * Master viewport panel
+ * 在viewport中嵌入我们需要的视图
+ */

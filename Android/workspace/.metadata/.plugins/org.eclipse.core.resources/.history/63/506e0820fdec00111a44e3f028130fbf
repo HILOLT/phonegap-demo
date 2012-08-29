@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sencha Touch todo list</title>
+<meta charset="utf-8">
+<script src="cordova-2.0.0.js"></script>
+</head>
+
+<body>
+<h1>Sencha Touch todo list</h1>
+</body>
+</html>

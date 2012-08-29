@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Notification示例</title>
+<script type="text/javascript" src="cordova-2.0.0.js"></script>
+<script type="text/javascript" charset="utf-8">
+document.addEventListener("deviceready", onDeviceReady, false);
+
+function onDeviceReady() {
+	// Empty
+}
+
+// alert对话框释放
+function alertDismissed() {
+	// do something
+}
+
+// 显示自定义对话框
+//
+function showAlert() {
+	navigator.notification.alert(
+	'您有新的消息！', //message
+	alertDismissed, // callback
+	'通知演示', // title
+	'查看' // buttonName
+	);
+}
+
+</script>
+</head>
+
+<body>
+	<p>
+    	<a href="#" onclick="showAlert(); return fasle;">显示提醒框</a></p>
+        <a href="index.html">返回主页</a></p>
+    </p>
+</body>
+</html>

@@ -1,0 +1,57 @@
+{
+  "/Users/tom/Documents/workspace/firstPhoneGap/libs/cordova-2.0.0.jar": {
+    "location": "/Users/tom/Documents/workspace/firstPhoneGap/libs/cordova-2.0.0.jar",
+    "status": "UNRESOLVED",
+    "error": "No call model found for \u0027/Users/tom/Documents/workspace/firstPhoneGap/libs/cordova-2.0.0.jar\u0027. Neither fingerprint \u00277c0924bdc53e5dea209bcb0eba1209159e48b5f9\u0027 nor symbolic name \u0027cordova-2.0.0\u0027 are known."
+  },
+  "/Users/tom/Documents/workspace/Accelemetor01/libs/cordova-2.0.0.jar": {
+    "location": "/Users/tom/Documents/workspace/Accelemetor01/libs/cordova-2.0.0.jar",
+    "status": "UNRESOLVED",
+    "error": "No call model found for \u0027/Users/tom/Documents/workspace/Accelemetor01/libs/cordova-2.0.0.jar\u0027. Neither fingerprint \u00277c0924bdc53e5dea209bcb0eba1209159e48b5f9\u0027 nor symbolic name \u0027cordova-2.0.0\u0027 are known."
+  },
+  "/Users/tom/Downloads/android-sdk-macosx/platforms/android-16/android.jar": {
+    "location": "/Users/tom/Downloads/android-sdk-macosx/platforms/android-16/android.jar",
+    "status": "UNRESOLVED",
+    "error": "No call model found for \u0027/Users/tom/Downloads/android-sdk-macosx/platforms/android-16/android.jar\u0027. Neither fingerprint \u00273dcce76e951c5ffaf5fc1e15001bbf62b54e9857\u0027 nor symbolic name \u0027android\u0027 are known."
+  },
+  "/Users/tom/Dropbox/myWork/Android/workspace/Storage/libs/cordova-2.0.0.jar": {
+    "location": "/Users/tom/Dropbox/myWork/Android/workspace/Storage/libs/cordova-2.0.0.jar",
+    "status": "UNRESOLVED",
+    "error": "No call model found for \u0027/Users/tom/Dropbox/myWork/Android/workspace/Storage/libs/cordova-2.0.0.jar\u0027. Neither fingerprint \u00277c0924bdc53e5dea209bcb0eba1209159e48b5f9\u0027 nor symbolic name \u0027cordova-2.0.0\u0027 are known."
+  },
+  "/Users/tom/Downloads/android-sdk-macosx/platforms/android-15/android.jar": {
+    "location": "/Users/tom/Downloads/android-sdk-macosx/platforms/android-15/android.jar",
+    "status": "UNRESOLVED",
+    "error": "No call model found for \u0027/Users/tom/Downloads/android-sdk-macosx/platforms/android-15/android.jar\u0027. Neither fingerprint \u002792822ec981a4d0a7f002c792e7b3b60f9a1f26fa\u0027 nor symbolic name \u0027android\u0027 are known."
+  },
+  "/Users/tom/Dropbox/myWork/Android/workspace/Media/libs/cordova-2.0.0.jar": {
+    "location": "/Users/tom/Dropbox/myWork/Android/workspace/Media/libs/cordova-2.0.0.jar",
+    "status": "UNRESOLVED",
+    "error": "No call model found for \u0027/Users/tom/Dropbox/myWork/Android/workspace/Media/libs/cordova-2.0.0.jar\u0027. Neither fingerprint \u00277c0924bdc53e5dea209bcb0eba1209159e48b5f9\u0027 nor symbolic name \u0027cordova-2.0.0\u0027 are known."
+  },
+  "/Users/tom/Dropbox/myWork/Android/workspace/Connection/libs/cordova-2.0.0.jar": {
+    "location": "/Users/tom/Dropbox/myWork/Android/workspace/Connection/libs/cordova-2.0.0.jar",
+    "status": "UNRESOLVED",
+    "error": "No call model found for \u0027/Users/tom/Dropbox/myWork/Android/workspace/Connection/libs/cordova-2.0.0.jar\u0027. Neither fingerprint \u00277c0924bdc53e5dea209bcb0eba1209159e48b5f9\u0027 nor symbolic name \u0027cordova-2.0.0\u0027 are known."
+  },
+  "/Users/tom/Dropbox/myWork/Android/workspace/Compass/libs/cordova-2.0.0.jar": {
+    "location": "/Users/tom/Dropbox/myWork/Android/workspace/Compass/libs/cordova-2.0.0.jar",
+    "status": "UNRESOLVED",
+    "error": "No call model found for \u0027/Users/tom/Dropbox/myWork/Android/workspace/Compass/libs/cordova-2.0.0.jar\u0027. Neither fingerprint \u00277c0924bdc53e5dea209bcb0eba1209159e48b5f9\u0027 nor symbolic name \u0027cordova-2.0.0\u0027 are known."
+  },
+  "/Users/tom/Dropbox/myWork/Android/workspace/Capture/libs/cordova-2.0.0.jar": {
+    "location": "/Users/tom/Dropbox/myWork/Android/workspace/Capture/libs/cordova-2.0.0.jar",
+    "status": "UNRESOLVED",
+    "error": "No call model found for \u0027/Users/tom/Dropbox/myWork/Android/workspace/Capture/libs/cordova-2.0.0.jar\u0027. Neither fingerprint \u00277c0924bdc53e5dea209bcb0eba1209159e48b5f9\u0027 nor symbolic name \u0027cordova-2.0.0\u0027 are known."
+  },
+  "/Users/tom/Dropbox/myWork/Android/workspace/Geolocation2/libs/cordova-2.0.0.jar": {
+    "location": "/Users/tom/Dropbox/myWork/Android/workspace/Geolocation2/libs/cordova-2.0.0.jar",
+    "status": "UNRESOLVED",
+    "error": "No call model found for \u0027/Users/tom/Dropbox/myWork/Android/workspace/Geolocation2/libs/cordova-2.0.0.jar\u0027. Neither fingerprint \u00277c0924bdc53e5dea209bcb0eba1209159e48b5f9\u0027 nor symbolic name \u0027cordova-2.0.0\u0027 are known."
+  },
+  "/Users/tom/Dropbox/myWork/Android/workspace/Demo01/libs/cordova-2.0.0.jar": {
+    "location": "/Users/tom/Dropbox/myWork/Android/workspace/Demo01/libs/cordova-2.0.0.jar",
+    "status": "UNRESOLVED",
+    "error": "No call model found for \u0027/Users/tom/Dropbox/myWork/Android/workspace/Demo01/libs/cordova-2.0.0.jar\u0027. Neither fingerprint \u00277c0924bdc53e5dea209bcb0eba1209159e48b5f9\u0027 nor symbolic name \u0027cordova-2.0.0\u0027 are known."
+  }
+}

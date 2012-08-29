@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete 4 elements from project &apos;Geolocation3&apos;&#x0A;- Original project: &apos;Geolocation3&apos;&#x0A;- Original elements:&#x0A;     jquery-1.6.4.js&#x0A;     jquery.mobile-1.0.css&#x0A;     jquery.mobile-1.0.js&#x0A;     jQueryRotate.2.1.js" description="Delete elements" element1="assets/www/jquery.mobile-1.0.css" element2="assets/www/jquery-1.6.4.js" element3="assets/www/jquery.mobile-1.0.js" element4="assets/www/jQueryRotate.2.1.js" elements="0" flags="589830" id="org.eclipse.jdt.ui.delete" resources="4" stamp="1345983898309" subPackages="false" version="1.0"/>
+</session>

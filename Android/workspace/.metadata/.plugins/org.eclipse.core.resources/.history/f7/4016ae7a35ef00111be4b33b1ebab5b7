@@ -1,0 +1,242 @@
+//===============================================
+// Example Storage
+// JavaScript source: main.js
+//===============================================
+
+var theDB;
+
+function init() {
+
+  console.log("Entering init");
+  alert("Init");
+
+  var purgeStatus, purgeInterval;
+
+  // 设置默认时间为当前时间
+  var now = new Date();
+  var todayStr = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
+  $('#editDate').val(todayStr);
+
+  //Create or open the database
+  console.log("Opening database");
+  theDB = window.openDatabase("mtDB", "1.0", "Mileage Tracker", 3 * 1024 * 1024);
+  console.log("Checking theDB");
+  if(theDB) {
+    console.log(theDB);
+    console.log("Creating table");
+    theDB.transaction(createTable, onTxError, onTxSuccess);
+    console.log("Finished creating table");
+  } else {
+    console.log("theDB object has not been created");
+    alert("this code shouldn't ever execute");
+  }
+
+  //从localStorage中读取purgeStatus
+  purgeStatus = window.localStorage.getItem("purgeStatus");
+  //从localstorage中读取purgeInterval
+  purgeInterval = window.localStorage.getItem("purgeInterval");
+  //如果启用了清除，则执行
+  if(purgeStatus == "true") {
+    //在配置中设置purgeStatus的值
+    $("#purgeStatus").attr("checked", true);
+    //设置purgeInterval的值
+    $("#purgeInterval").attr('value', purgeInterval);
+    //执行清除
+    doPurge(purgeInterval);
+  }
+  // test
+  alert(window.localStorage.key(0));
+  alert(window.localStorage.key(1));
+  
+  console.log("Leaving init");
+}
+
+function createTable(tx) {
+  console.log("Entering createTable");
+  var sqlStr = 'CREATE TABLE IF NOT EXISTS MILEAGE (tripDate INT, miles INT, notes TEXT)';
+  console.log(sqlStr);
+  tx.executeSql(sqlStr, [], onSqlSuccess, onSqlError);
+  console.log("Leaving createTable");
+}
+
+function onTxSuccess() {
+  console.log("TX: success");
+}
+
+// Transaction失败处理
+function onTxError(tx, err) {
+  console.log("Entering onTxError");
+  var msgText;
+  if(err) {
+    msgText = "TX: " + err.message + " (" + err.code + ")";
+  } else {
+    msgText = "TX: Unkown error";
+  }
+  console.error(msgText);
+  alert(msgText);
+  console.log("Leaving onTxError");
+}
+
+function onSqlSuccess(tx, res) {
+  console.log("SQL: success");
+  if(res) {
+    console.log(res);
+  }
+}
+
+function onSqlError(tx, err) {
+  console.log("Entering onSqlError");
+  var msgText;
+  if(err) {
+    msgText = "SQL: " + err.message + " (" + err.code + ")";
+  } else {
+    msgText = "SQL: Unknown error";
+  }
+  console.error(msgText);
+  alert(msgText);
+  console.log("Leaving onSqlError");
+}
+
+function saveRecord() {
+  console.log("Entering saveRecord");
+  //这里可以做一些数据验证工作，比如日期要有效，numMiles > 0
+  //写入数据
+  theDB.transaction(insertRecord, onTxError, onTxSuccess);
+  console.log("Leaving saveRecord");
+}
+
+function insertRecord(tx) {
+  console.log("Entering insertRecord");
+  //创建一个新的Date对象来持有用户输入的日期
+  var tmpDate = new Date.fromString(document.getElementById("editDate").value);
+  console.log("Date: " + tmpDate.valueOf());
+  var tmpMiles = document.getElementById("editNumMiles").value;
+  console.log("Miles: " + tmpMiles);
+  var tmpNotes = document.getElementById("editNotes").value;
+  console.log("Notes: " + tmpNotes);
+  var sqlStr = 'INSERT INTO MILEAGE (tripDate, miles, notes) VALUES (?, ?, ?)';
+  console.log(sqlStr);
+  tx.executeSql(sqlStr, [tmpDate.valueOf(), tmpMiles, tmpNotes], onSqlSuccess, onSqlError);
+
+  // 使用jQuery重置表单的输入值
+  var blankVal = {
+    value : ''
+  };
+  $("#editNumMiles").attr(blankVal);
+  $("#editNotes").attr(blankVal);
+  console.log("Leaving insertRecord");
+}
+
+function openView(viewType) {
+  console.log("Entering openView");
+  var headerTxt, sqlStr;
+
+  //得到当前日期
+  var now = new Date();
+  //格式化
+  var todayStr = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
+  //todayVal是以毫秒计的当前日期
+  var tmpDate = Date.fromString(todayStr);
+  var todayVal = tmpDate.valueOf(tmpDate);
+  //根据不同的的view types进行处理
+  switch(viewType) {
+    case 1:
+      headerTxt = "今日行程";
+      //构建select语句
+      sqlStr = "SELECT * FROM MILEAGE WHERE tripDate = " + todayVal + " ORDER BY tripDate ASC";
+      break;
+    case 2:
+      headerTxt = "过去七日";
+      //Last week is today - the number of milliseconds in 7 days.
+      //which is (1000 * 60 * 60 * 24 * 7) or 604,800,000
+      var lastWeek = todayVal - 604800000;
+      sqlStr = "SELECT * FROM MILEAGE WHERE tripDate >= " + lastWeek + " ORDER BY tripDate ASC";
+      break;
+    case 3:
+      headerTxt = "出行日期";
+      sqlStr = "SELECT * FROM MILEAGE ORDER BY tripDate ASC";
+      break;
+  }
+  //设置页面标题
+  $("#viewTitle").html(headerTxt);
+
+  console.log("SQL: " + sqlStr);
+  theDB.transaction(function(tx) {
+    tx.executeSql(sqlStr, [], onQuerySuccess, onQueryFailure);
+  }, onTxError, onTxSuccess);
+  console.log("Leaving openView");
+}
+
+function onQuerySuccess(tx, results) {
+  console.log("Entering onQuerySuccess");
+  if(results.rows) {
+    console.log("Rows: " + results.rows);
+    var htmlStr = "";
+    var len = results.rows.length;
+    if(len > 0) {
+      for(var i = 0; i < len; i++) {
+        var theDate = new Date(results.rows.item(i).tripDate);
+        htmlStr += '<b>日期:</b> ' + theDate.toDateString() + '<br />';
+        var numMiles = results.rows.item(i).miles;
+        if(numMiles > 1) {
+          htmlStr += '<b>英里:</b> ' + numMiles + ' miles<br />';
+        } else {
+          htmlStr += '<b>英里:</b> 1 mile<br />';
+        }
+        //Check to see if there are any notes before writing
+        // anything to the page
+        var theNotes = results.rows.item(i).notes;
+        if(theNotes.length > 0) {
+          htmlStr += '<b>备注:</b> ' + theNotes + '<br />';
+        }
+        htmlStr += '<hr />';
+      }
+
+      $("#viewData").html(htmlStr);
+      //Open the View page to display the data
+      $.mobile.changePage("#dataView", "slide", false, true);
+
+    } else {
+      //This should never happen
+      alert("No rows.");
+    }
+  } else {
+    alert("No records match selection criteria.");
+  }
+  console.log("Leaving openView");
+}
+
+function onQueryFailure(tx, err) {
+  console.log("Entering onQueryFailure");
+  var msgText;
+  if(err) {
+    msgText = "Query: " + err;
+  } else {
+    msgText = "Query: Unknown error";
+  }
+  console.error(msgText);
+  alert(msgText);
+  console.log("Leaving onQueryFailure");
+}
+
+function doPurge(pi) {
+  alert("doPurge");
+  // 这里加一下判断时间并清理记录的代码
+
+}
+
+function showConfigPage() {
+  $.mobile.changePage("#config", "flip", false, true);
+}
+
+function showViewPage() {
+  $.mobile.changePage("#viewList", "slide", false, true);
+}
+
+function saveConfig() {
+  //将配置设置写入localStorage
+  window.localStorage.setItem("purgeStatus", document.getElementById("purgeStatus").checked);
+  window.localStorage.setItem("purgeInterval", document.getElementById("purgeInterval").value);
+  //切换回主界面
+  $.mobile.changePage("#main", "flip", false, false);
+}

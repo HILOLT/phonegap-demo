@@ -1,0 +1,24 @@
+/**
+ * todolist 的主js文件
+ * 应用架构：
+ * Ext.application 实例
+ * Master viewport panel
+ * 在viewport中嵌入我们需要的视图
+ */
+Ext.Loader.setConfig({
+	eanbled: true
+});
+
+Ext.application({
+	models: ['Task'],
+	controllers: ['TaskController'],
+	stores: ['TaskStore'],
+	views: ['TaskList', 'TaskForm'],
+	name: 'ToDoListApp',
+	launch: function() {
+		Ext.Viewport.add([
+		                  Ext.create('ToDoListApp.view.TaskList'),
+		                  Ext.create('ToDoListApp.view.TaskForm')
+		                  ]);
+	}
+});

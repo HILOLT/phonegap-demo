@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example Capture</title>
+    <meta name="viewport" content="width=device-width, height=device-height initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="jquery.mobile-1.2.0-alpha.css" />
+    <script type="text/javascript" charset="utf-8" src="jquery-1.7.2.js"></script>
+    <script type="text/javascript" charset="utf-8" src="jquery.mobile-1.2.0-alpha.js"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova-2.0.0.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      var results;
+
+      function onBodyLoad() {
+        //Let the user know we got this far
+        alert("onBodyLoad");
+
+        //Add the PhoneGap deviceready event listener
+        document.addEventListener("deviceready", onDeviceReady, false);
+      }
+
+      function onDeviceReady() {
+        var tmpElement;
+
+        //Let the user know we got this far
+        alert("onDeviceReady");
+        //Get a handle to the results area of the page
+        res = document.getElementById("captureResults");
+      }
+
+      function doCapture() {
+        //清空前面的结果
+        res.innerHTML = "采集初始化...";
+        //从页面读取数量，时长等参数
+        var numItems = document.getElementById("numItems").value;
+        var capDur = document.getElementById("duration").value;
+        //搞定采集类型
+        var captureType = document.getElementById("captureType").selectedIndex;
+        switch(captureType) {
+          case 0:
+            //音频采集
+            navigator.device.capture.captureAudio(onCaptureSuccess, onCaptureError, {
+              duration : capDur,
+              limit : numItems
+            });
+            break;
+          case 1:
+            //图片采集
+            navigator.device.capture.captureImage(onCaptureSuccess, onCaptureError, {
+              limit : numItems
+            });
+            break;
+          case 2:
+            //视频采集
+            navigator.device.capture.captureVideo(onCaptureSuccess, onCaptureError, {
+              duration : capDur,
+              limit : numItems
+            });
+            break;
+        }
+      }
+
+      function onCaptureSuccess(fileList) {
+        var i, len, htmlStr;
+        len = fileList.length;
+        //确保采集成功。如果成功的话，length应该 > 0
+        if(len > 0) {
+          htmlStr = "<p>Results:</p><ol>";
+          for( i = 0, len; i < len; i += 1) {
+            //alert(fileList[i].fullPath);
+            htmlStr += '<li><a href="file:/' + fileList[i].fullPath + '">' + fileList[i].name + '</a></li>';
+          }
+          htmlStr += "</ol>";
+          //这是result内容
+          res.innerHTML = htmlStr;
+        }
+      }
+
+      function onCaptureError(e) {
+        var msgText;
+        //采集失败的话，清空前面生成的内容。
+        res.innerHTML = "";
+        //根据API返回的错误码构建一个消息字符串
+        switch(e.code) {
+          case CaptureError.CAPTURE_INTERNAL_ERR:
+            msgText = "内部错误, 摄像头或者麦克风采集图片或音频失败。";
+            break;
+          case CaptureError.CAPTURE_APPLICATION_BUSY:
+            msgText = "摄像头应用或者录音机程序正在被其他采集请求使用。";
+            break;
+          case CaptureError.CAPTURE_INVALID_ARGUMENT:
+            msgText = "传递给API的参数无效。";
+            break;
+          case CaptureError.CAPTURE_NO_MEDIA_FILES:
+            msgText = "用户可能取消了采集过程。";
+            break;
+          case CaptureError.CAPTURE_NOT_SUPPORTED:
+            msgText = "该设备不支持请求的操作。";
+            break;
+          default:
+            //针对其他错误生成一个常规回复
+            msgText = "未知错误 (" + e.code + ")";
+        }
+        //使用alert通知用户
+        navigator.notification.alert(msgText, null, "采集出错了！");
+      }
+    </script>
+  </head>
+  <body onload="onBodyLoad()">
+    <div data-role="header">
+      <h1>Capture Demo</h1>
+    </div>
+    <div data-role="content">
+      <label for="captureType">采集类型:</label>
+      <select id="captureType" name="captureType">
+        <option value="0">音频</option>
+        <option value="1">图片</option>
+        <option value="2">视频</option>
+      </select>
+      <label for="numItems">采集数量(1-5)</label>
+      <input type="range" name="numItems" id="numItems" value="1" min="1" max="5" />
+      <label for="duration">Duration</label>
+      <input type="range" name="duration" id="duration" value="5" min="1" max="10" />
+      <input type="button" id="captureButton" value="Capture" onclick="doCapture();">
+      <div id="captureResults"></div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example Camera-2</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" id="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+    <script type="text/javascript" charset="utf-8" src="cordova-2.0.0.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      function onBodyLoad() {
+        alert("onBodyLoad");
+        document.addEventListener("deviceready", onDeviceReady, false);
+      }
+
+      function onDeviceReady() {
+        navigator.notification.alert("onDeviceReady");
+      }
+
+      function takePhoto() {
+        //alert("takePhoto");
+        navigator.camera.getPicture(onCameraSuccess, onCameraError, {
+          quality : 100,
+          destinationType : Camera.DestinationType.FILE_URI,
+          //destinationType : Camera.DestinationType.DATA_URL,
+          targetWidth: 1280,
+          targetHeight: 768,
+          sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+          mediaType: Camera.MediaType.VIDEO,
+          //correctOrientation: true
+          saveToPhotoAlbum: true
+        });
+        // navigator.camera.getPicture(onCameraSuccess, onCameraError);
+      }
+
+      function onCameraSuccess(imageURL) {
+        navigator.notification.alert("onCameraSuccess: " + imageURL);
+        //得到用于显示图片的div的id
+        ic = document.getElementById('imageContainer');
+        //使用从camera程序得到的URL写一个img标签，并且输出到刚才得到的div。
+        //ic.innerHTML = '<img src="' + imageURL + '" width="90%" />';
+        ic.innerHTML = '<video src="' + imageURL + '" />';
+      }
+
+      function onCameraError(e) {
+        console.log(e);
+        navigator.notification.alert("onCameraError: " + e);
+      }
+    </script>
+  </head>
+  <body onload="onBodyLoad()">
+    <h1>Example Camera - 2</h1>
+    <p>
+      使用 PhoneGap Camera API 拍照并在HTML页面显示
+      <br />
+      <input type="button" value="来张照片" onclick="takePhoto();">
+      <div id="imageContainer"></div>
+    </p>
+  </body>
+</html>

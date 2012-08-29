@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<title>Example Device-1</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" id="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+    <script type="text/javascript" charset="utf-8" src="cordova-2.0.0.js"></script>
+    <script type="text/javascript" charset="utf-8">
+	
+	var br = "<br />";
+	
+	function onBodyLoad() {		
+		document.addEventListener("deviceready", onDeviceReady, false);
+	}
+	
+	function onDeviceReady() {
+		//得到要操作的DOM元素
+		var element = document.getElementById("deviceInfo");
+		//替换成使用设备信息
+        element.innerHTML = "<b>device.name: " + device.name + br +
+		"<b>device.cordova:</b> " + device.cordova + br +
+		"<b>device.platform:</b> " + device.platform + br +
+		"<b>device.uuid:</b> " + device.uuid + br +
+		"<b>device.version:</b> " + device.version + br;
+	}
+    
+    </script>
+  </head>
+  <body onload="onBodyLoad()">
+    <h1>Example Device-1</h1>
+    <p id="deviceInfo">等待PhoneGap初始化完成</p>
+  </body>
+</html>

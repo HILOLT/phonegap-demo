@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>localStorage</title>
+<script type="text/javascript" charset="utf-8" src="cordova-2.0.0.js"></script>
+<script type="text/javascript" charset="utf-8">
+
+// 等待cordova就绪
+//
+document.addEventListener("deviceready", onDeviceReady, false);
+
+// Cordova就绪
+//
+function onDeviceReady() {
+	window.localStorage.setItem("key", "value");
+	var keyname = window.localStorage.key(i);
+	// keyname现在等于“key”
+	var value = window.localStorage.getItem("key");
+	// value现在等于"value"
+	window.localStorage.removeItem("key");
+	window.localStorage.setItem("key2", "value2");
+	window.localStorage.clear();
+	// localStorage现在是空的
+}
+</script>
+</head>
+
+<body>
+<h1>Example - localStorage</h1>
+<p>localStorage</p>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Storage Example - execute</title>
+
+<script type="text/javascript" charset="utf-8" src="cordova-2.0.0.js"></script>
+<script type="text/javascript" charset="utf-8">
+
+// 等待Cordova加载
+//
+document.addEventListener("deviceready", onDeviceReady, false);
+
+// 填充数据
+//
+function populateDB(tx) {
+        tx.executeSql('DROP TABLE IF EXISTS DEMO');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id unique, data)');
+        tx.executeSql('INSERT INTO DEMO (id, data) VALUES (1, "First row")');
+        tx.executeSql('INSERT INTO DEMO (id, data) VALUES (2, "Second row")');
+    }
+
+// 查询数据库(tx,是SQLTransaction对象)
+//
+function queryDB(tx) {
+	tx.executeSql('SELECT * FROM DEMO', [], querySuccess, errorCB);
+}
+
+// 查询成功的回调方法
+//
+function querySuccess(tx, results) {
+	console.log("返回行数：" + results.rows.length);
+	navigator.notification.alert("返回行数：" + results.rows.length);
+	// 测试是否有受影响的行（因为这个是select语句，因此影响的行数rowsAffected = 0
+//	if (!results.rowAffected) {
+//		console.log("没有受影响的行！");
+//		return false;
+//	}
+//	
+	// 对于insert语句，这里打印出最后插入行的ID
+//	console.log("最后插入行的ID：" + result.insertId);
+	for (var i=0; i<results.rows.length; i++) {
+		var alertString = "Row = " + i + 
+		" ID = " + results.rows.item(i).id + 
+		" Data = " + results.rows.item(i).data;
+		
+		navigator.notification.alert(alertString);
+	}
+}
+
+// 事务失败的回调方法
+//
+function errorCB(err) {
+	console.log("Error processing SQL: " + err.code);
+	navigator.notification.alert("Error processing SQL: " + err.code);
+}
+
+// 事务成功的回调方法
+//
+function successCB() {
+	var db = window.openDatabase("Database", "1.0", "Cordova Demo", 20000);
+	db.transaction(queryDB, errorCB);
+}
+
+// Cordova准备好了
+//
+function onDeviceReady() {
+	var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+	db.transaction(populateDB, errorCB, successCB);
+}
+
+</script>
+</head>
+
+<body>
+</body>
+</html>

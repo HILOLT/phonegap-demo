@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example Geolocation-1</title>
+    <meta name="viewport" content="width=device-width, height=device-height initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <script type="text/javascript" charset="utf-8" src="cordova-2.0.0.js"></script>
+    <script type="text/javascript">
+      //位置信息
+      var lc;
+      //PhoneGap 是否Ready
+      var pgr = false;
+
+      function onBodyLoad() {
+        alert("onBodyLoad");
+        document.addEventListener("deviceready", onDeviceReady, false);
+      }
+
+      function onDeviceReady() {
+        alert("onDeviceReady");
+        //用于更新位置信息的句柄
+        lc = document.getElementById("locationInfo");
+        //设置PhoneGap已就绪
+        pgr = true;
+      }
+
+      function getLocation() {
+        alert("getLocation");
+        if(pgr == true) {
+          var locOptions = {
+            timeout : 5000,
+            enableHighAccuracy : true
+          };
+          //获得当前位置
+          navigator.geolocation.getCurrentPosition(onLocationSuccess, onLocationError, locOptions);
+         //当等待读取位置信息时，清除当前的位置显示
+          lc.innerHTML = "位置信息读取中...";
+
+        } else {
+          alert("请稍后,\nPhoneGap 尚未就绪.");
+        }
+      }
+
+      function onLocationSuccess(loc) {
+        alert("onLocationSuccess");
+        // 读取位置信息的时间戳
+        var d = new Date(loc.timestamp);
+        // 使用收到的位置信息更新显示
+        lc.innerHTML = '<b>当前位置</b><hr /><b>纬度</b>: ' + loc.coords.latitude + '<br /><b>经度</b>: ' + loc.coords.longitude + '<br /><b>高度</b>: ' + loc.coords.altitude + '<br /><b>精度</b>: ' + loc.coords.accuracy + '<br /><b>海拔精确度</b>: ' + loc.coords.altitudeAccuracy + '<br /><b>航向</b>: ' + loc.coords.heading + '<br /><b>速度</b>: ' + loc.coords.speed + '<br /><b>时间戳</b>: ' + d.toLocaleString();
+      }
+
+      function onLocationError(e) {
+        alert("Geolocation error: #" + e.code + "\n" + e.message);
+      }
+    </script>
+  </head>
+  <body onload="onBodyLoad()">
+    <h1>Geolocation API Demo #1</h1>
+    <p>
+      点击按钮来获得当前位置。
+    </p>
+    <input type="button" value="刷新位置" onclick="getLocation();">
+    <hr />
+    <p id="locationInfo">
+      点击上面的按钮以刷新位置信息。
+    </p>
+  </body>
+</html>

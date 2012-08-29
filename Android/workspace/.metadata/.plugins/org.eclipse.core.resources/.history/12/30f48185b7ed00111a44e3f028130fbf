@@ -1,0 +1,153 @@
+/**
+ * todolist 的主js文件
+ * 应用架构：
+ * Ext.application 实例
+ * Master viewport panel
+ * 在viewport中嵌入我们需要的视图
+ */
+Ext.Loader.setConfig({
+	eanbled: true
+});
+
+Ext.application({
+	models: ['Task'],
+	controllers: ['TaskController'],
+	stores: ['TaskStore'],
+	views: ['TaskList', 'TaskForm'],
+	name: 'ToDoListApp',
+	launch: function() {
+		Ext.Viewport.add([
+		                  Ext.create('ToDoListApp.view.TaskList'),
+		                  Ext.create('ToDoListApp.view.TaskForm')
+		                  ]);
+	}
+});
+
+Ext.define('ToDoListApp.veiw.TaskList', {
+	extend: 'Ext.dataview.List',
+	config: {
+		items: [{
+			xtype: 'toolbar',
+			title: 'To Do List',
+			items: [{
+				xtype: 'spacer'
+			},
+			{
+				xtype: 'button',
+				iconCls: 'add',
+				ui: 'plain'
+			}]
+		}]
+	}
+});
+
+Ext.define('ToDoListApp.model.Task', {
+	extend: 'Ext.data.Model',
+	config: {
+		fields: [{
+			name: 'id',
+			type: 'int'
+		}, {
+			name: 'completed',
+			type: 'boolean'
+		}, {
+			name: 'dueDate',
+			type: 'date'
+		}, {
+			name: 'title',
+			type: 'string'
+		}, {
+			name: 'description',
+			type: 'string'
+		}],
+		idProperty: 'id'
+	}
+});
+
+Ext.define('ToDoListApp.store.TaskStore', {
+	extend: 'Ext.data.Store',
+	requires: ['ToDoListApp.model.Task'],
+	
+	config: {
+		model: 'ToDoListApp.model.Task',
+		sorters: [{
+			property: "dueDate",
+			direction: "ASC"
+		}],
+		autoLoad: true,
+		autoSync: true,
+		singleton: true,
+		storeId: 'TaskStore',
+		proxy: {
+			type: 'localStorage',
+			id: "senchatasks"
+		},
+		grouper: function(record) {
+			if (record && record.get("dueDate")) {
+				return record.get("dueDate").toDateString();
+			}
+		}
+	}
+});
+
+Ext.define('ToDoListApp.view.TaskList', {
+	extend: 'Ext.dataview.List',
+	requires: ['ToDoListApp.store.TaskStore'],
+	
+	config: {
+		displayField: 'title',
+		id: 'taskList',
+		store: Ext.create('ToDoListApp.store.TaskStore'),
+		itemTpl: '<div class="task completed_{completed}"'>{title}</div>',
+		onItemDisclosure: true,
+		emptyText: '<p align="center" class="instructions">No tasks here yet.<br/>Tap the " + " button to create one.</p>',
+		groupd: true,
+		
+		items: [{
+			xtype: 'toolbar',
+			title: 'To Do List',
+			docked: 'top',
+			ui: 'light'
+		}]
+	}
+});
+
+Ext.define('ToDoListApp.controller.TaskController', {
+	extend: 'Ext.app.Controller',
+	config: {
+		id: 'taskController',
+		refs: {
+			saveButton: 'button[action=saveTask]',
+			taskForm: '#taskForm'
+		},
+		control: {
+			saveButton: {
+				tap: 'saveTask'
+			}
+		}
+	},
+	
+	launch: function() {
+		this.updateTaskCount();
+	},
+	
+	saveTask: function(button, e, eOpts) {
+		var form = this.getTaskForm();
+	}
+});
+
+showForm: function() {
+	Ext.Viewport.getLayout().setAnimation({
+		type: 'slide',
+		direction: 'left'
+	});
+	Ext.Viewport.setActiveItem(this.getTaskForm());
+},
+
+showList: function() {
+	Ext.Viewport.getLayout().setAnimation({
+		type: 'slide',
+		direction: 'right'
+	});
+	Ext.Viewport.setActiveItem(this.getTaskList());
+},

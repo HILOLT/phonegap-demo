@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete 3 elements from project &apos;Notification&apos;&#x0A;- Original project: &apos;Notification&apos;&#x0A;- Original elements:&#x0A;     jquery.mobile1.0b3.min.css&#x0A;     jquery.mobile1.0b3.min.js&#x0A;     jquery1.6.4.min.js" description="Delete elements" element1="assets/www/jquery.mobile1.0b3.min.css" element2="assets/www/jquery.mobile1.0b3.min.js" element3="assets/www/jquery1.6.4.min.js" elements="0" flags="589830" id="org.eclipse.jdt.ui.delete" resources="3" stamp="1345964889082" subPackages="false" version="1.0"/>
+</session>

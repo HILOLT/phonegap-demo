@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example Notification</title>
+    <meta name="viewport" content="width=device-width, height=device-height initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="jquery.mobile-1.2.0-alpha.1.min.css" />
+    <script type="text/javascript" charset="utf-8" src="jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="jquery.mobile-1.2.0-alpha.1.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova-2.0.0.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      function onBodyLoad() {
+        //alert("onBodyLoad");
+        document.addEventListener("deviceready", onDeviceReady, false);
+      }
+
+      function onDeviceReady() {
+        alert("onDeviceReady");
+      }
+
+      function doAlert() {
+        msgText = document.getElementById('msgText').value;
+        navigator.notification.alert(msgText, onDoAlert, "Alert示例", "Click Me!");
+      }
+
+      function onDoAlert() {
+        alert("Click Me Button!");
+      }
+
+      function doConfirm() {
+        msgText = document.getElementById('msgText').value;
+        navigator.notification.confirm(msgText, onDoConfirm, "Confirmation示例", "Yes, No, Maybe");
+      }
+
+      function onDoConfirm(btnNum) {
+        if(btnNum == "1") {
+          alert("Thanks for saying yes!");
+        } else {
+          alert("Too bad, you said no.");
+        }
+      }
+
+      function doBeep() {
+        beepCount = document.getElementById('beepSlider').value;
+        navigator.notification.beep(beepCount);
+      }
+
+      function doVibe() {
+        vibeCount = document.getElementById('vibeSlider').value;
+        navigator.notification.vibrate(vibeCount);
+      }
+    </script>
+  </head>
+  <body onload="onBodyLoad()">
+    <div data-role="header">
+      <h1>Notification 示例</h1>
+    </div>
+    <div data-role="content">
+      <div data-role="fieldcontain">
+        <label for="msgText">消息文本:</label>
+        <input type="text" name="msgText" id="msgText" value="这是一条文本消息!" />
+        <div data-role="controlgroup" data-type="horizontal">
+          <input type="button" value="Alert" onclick="doAlert();">
+          <input type="button" value="Confirm" onclick="doConfirm();">
+        </div>
+      </div>
+      <div data-role="fieldcontain">
+        <label for="beepSlider" >Beep次数</label>
+        <input type="range" name="beepSlider" id="beepSlider" value="1" min="1" max="3" />
+        <input type="button" value="Beep" onclick="doBeep();">
+      </div>
+      <div data-role="fieldcontain">
+        <label for="vibeSlider" >振动时长</label>
+        <input type="range" name="vibeSlider" id="vibeSlider" value="100" min="100" max="1000" step="100" />
+        <input type="button" value="Vibrate" onclick="doVibe();">
+      </div>
+    </div>
+  </body>
+</html>
