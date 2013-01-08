@@ -1,4 +1,4 @@
-phoneGapDemo
+PhoneGap 讲义和演示
 ============
 
-中程在线 HTML5&PhoneGap API 演示代码
+PhoneGap 开发培训的讲义和演示。
