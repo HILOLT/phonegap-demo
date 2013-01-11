@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example Storage</title>
+    <meta name="viewport" content="width=device-width, height=device-height initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="jquery.mobile-1.2.0-alpha.css" />
+    <script type="text/javascript" charset="utf-8" src="jquery-1.7.2.js"></script>
+    <script type="text/javascript" charset="utf-8" src="jquery.mobile-1.2.0-alpha.js"></script>
+    <script type="text/javascript" charset="utf-8" src="date.js"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova-2.0.0.js"></script>
+    <script type="text/javascript" charset="utf-8" src="main.js"></script>
+    <script type="text/javascript">
+      function onBodyLoad() {
+        alert("onBodyLoad");
+        document.addEventListener("deviceready", onDeviceReady, false);
+      }
+
+      function onDeviceReady() {
+        //在测试过程中，确认PhoneGap确实被加载了
+        alert("onDeviceReady");
+        //初始化数据库和数据存储
+        init();
+      }
+    </script>
+  </head>
+  <body onload="onBodyLoad()">
+    <section id="main" data-role="page" >
+      <header data-role="header">
+        <a onclick="showViewPage();" data-icon="grid" >查看</a>
+        <h1>里程跟踪</h1>
+        <a onclick="showConfigPage();" data-icon="gear" >配置</a>
+      </header>
+      <div data-role="content">
+        <label for="editDate">日期:</label>
+        <input type="date" name="editDate" id="editDate" value="" />
+        <br />
+        <label for="editNumMiles">里程数:</label>
+        <input type="number" name="editNumMiles" id="editNumMiles" min="1" value="" />
+        <br />
+        <label for="editNotes">备注:</label>
+        <textarea cols="40" rows="8" name="editNotes" id="editNotes"></textarea>
+        <br />
+        <input type="button" value="保存" onclick="saveRecord();">
+      </div>
+    </section>
+    <section id="viewList" data-role="page" data-add-back-btn="true">
+      <header data-role="header">
+        <h1>里程跟踪视图</h1>
+      </header>
+      <div data-role="content">
+        <ul data-role="listview">
+          <li>
+            <a href="#" onclick="openView(1);">今天</a>
+          </li>
+          <li>
+            <a href="#" onclick="openView(2);">过去七天</a>
+          </li>
+          <li>
+            <a href="#" onclick="openView(3);">全部日期</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+    <section id="dataView" data-role="page" data-add-back-btn="true">
+      <header data-role="header">
+        <h1>MT 里程视图</h1>
+      </header>
+      <div data-role="content">
+        <h1 id="viewTitle"></h1>
+        <hr />
+        <div id="viewData"></div>
+      </div>
+    </section>
+    <section id="config" data-role="page" >
+      <header data-role="header">
+        <h1>MT 配置</h1>
+      </header>
+      <div data-role="content">
+        <div data-role="fieldcontain">
+          <legend>
+            每日清除旧的记录吗？
+          </legend>
+          <label for="purgeStatus">启用清除</label>
+          <input type="checkbox" name="purgeStatus" id="purgeStatus" />
+          <label for="purgeInterval">清除间隔</label>
+          <input type="number" id="purgeInterval" name="purgeInterval" />
+          天
+        </div>
+        <input type="button" value="保存配置" onclick="saveConfig();">
+      </div>
+    </section>
+  </body>
+</html>

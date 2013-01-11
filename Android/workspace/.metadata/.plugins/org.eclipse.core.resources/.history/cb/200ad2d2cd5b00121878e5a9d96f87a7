@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example File API</title>
+    <meta name="viewport" content="width=device-width, height=device-height initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="jquery.mobile-1.2.0-alpha.1.min.css" />
+    <script type="text/javascript" charset="utf-8" src="jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="jquery.mobile-1.2.0.js"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova-2.3.0.js"></script>
+    <script type="text/javascript" charset="utf-8" src="main.js"></script>
+    <script type="text/javascript" charset="utf-8" src="randomStr.js"></script>
+    <script type="text/javascript">
+      function onBodyLoad() {
+        alert("onBodyLoad");
+        document.addEventListener("deviceready", onDeviceReady, false);
+      }
+
+      function onDeviceReady() {
+        alert("onDeviceReady");
+      }
+    </script>
+  </head>
+  <body onload="onBodyLoad()">
+    <section id="main" data-role="page" >
+      <header data-role="header">
+        <h1>File API Demo</h1>
+      </header>
+      <div data-role="content">
+        <p>
+          选择文件系统:
+          <input type="button" value="临时文件" onclick="processDir(LocalFileSystem.TEMPORARY);">
+          <input type="button" value="持久存储" onclick="processDir(LocalFileSystem.PERSISTENT);">
+        </p>
+      </div>
+    </section>
+    <section id="dirList" data-role="page" data-add-back-btn="true">
+      <header data-role="header">
+        <h1>File API Demo</h1>
+        <a onclick="writeFile();" data-icon="plus" class="ui-btn-right">Write</a>
+      </header>
+      <div data-role="content">
+        <p>
+          文件系统内容:
+        </p>
+        <div id="dirEntries"></div>
+        <hr />
+        <div id="writeInfo"></div>
+      </div>
+    </section>
+    <section id="fileDetails" data-role="page" data-add-back-btn="true">
+      <header data-role="header">
+        <h1>File API Demo</h1>
+      </header>
+      <div data-role="content">
+        <p>
+          <em>Directory Entry 信息</em>
+        </p>
+        <hr />
+        <div id="fileInfo"></div>
+        <hr />
+        <p>
+          <em>File Metadata:</em>
+        </p>
+        <div id="fileMetadata"></div>
+        <input type="button" value="查看文件" onclick="viewFile();">
+        <input type="button" value="删除文件" onclick="removeFile();">
+      </div>
+    </section>
+    <section id="viewFile" data-role="page" data-add-back-btn="true">
+      <header data-role="header">
+        <h1>File API Demo</h1>
+      </header>
+      <div data-role="content">
+        <div id="viewFileName"></div>
+        <div id="fileContents"></div>
+        <hr />
+        <div id="readInfo"></div>
+      </div>
+    </section>
+  </body>
+</html>
